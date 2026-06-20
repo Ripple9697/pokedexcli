@@ -1,10 +1,11 @@
 package main
 
 import (
-	"bufio"
-	"fmt"
-	"os"
-	"strings"
+    "bufio"
+    "fmt"
+    "os"
+    "strings"
+    "github.com/Ripple9697/pokedexcli/internal/pokeapi"
 )
 
 func startRepl(cfg *config) {
@@ -41,6 +42,7 @@ func cleanInput(text string) []string {
 }
 
 type config struct {
+    pokeapiClient    pokeapi.Client
     nextLocationsURL *string
     prevLocationsURL *string
 }
@@ -68,6 +70,11 @@ func getCommands() map[string]cliCommand {
             description: "Get the next page of locations",
             callback:    commandMapf,
         },
+		"mapb": {
+			name: 		 "mapb",
+			description: "get the previous page of locations",
+			callback:	 commandMapb,
+		},
     }
 }
 
