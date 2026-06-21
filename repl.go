@@ -1,11 +1,12 @@
 package main
 
 import (
-    "bufio"
-    "fmt"
-    "os"
-    "strings"
-    "github.com/Ripple9697/pokedexcli/internal/pokeapi"
+	"bufio"
+	"fmt"
+	"os"
+	"strings"
+
+	"github.com/Ripple9697/pokedexcli/internal/pokeapi"
 )
 
 func startRepl(cfg *config) {
@@ -42,39 +43,38 @@ func cleanInput(text string) []string {
 }
 
 type config struct {
-    pokeapiClient    pokeapi.Client
-    nextLocationsURL *string
-    prevLocationsURL *string
+	pokeapiClient    pokeapi.Client
+	nextLocationsURL *string
+	prevLocationsURL *string
 }
 
 type cliCommand struct {
 	name        string
 	description string
-	callback func(*config) error
+	callback    func(*config) error
 }
 
 func getCommands() map[string]cliCommand {
-    return map[string]cliCommand{
-        "help": {
-            name:        "help",
-            description: "Displays a help message",
-            callback:    commandHelp,
-        },
-        "exit": {
-            name:        "exit",
-            description: "Exit the Pokedex",
-            callback:    commandExit,
-        },
-        "map": {
-            name:        "map",
-            description: "Get the next page of locations",
-            callback:    commandMapf,
-        },
-		"mapb": {
-			name: 		 "mapb",
-			description: "get the previous page of locations",
-			callback:	 commandMapb,
+	return map[string]cliCommand{
+		"help": {
+			name:        "help",
+			description: "Displays a help message",
+			callback:    commandHelp,
 		},
-    }
+		"exit": {
+			name:        "exit",
+			description: "Exit the Pokedex",
+			callback:    commandExit,
+		},
+		"map": {
+			name:        "map",
+			description: "Get the next page of locations",
+			callback:    commandMapf,
+		},
+		"mapb": {
+			name:        "mapb",
+			description: "get the previous page of locations",
+			callback:    commandMapb,
+		},
+	}
 }
-

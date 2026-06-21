@@ -13,4 +13,3 @@ func commandHelp(cfg *config) error {
 	fmt.Println()
 	return nil
 }
-
