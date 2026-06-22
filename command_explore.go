@@ -5,10 +5,10 @@ import (
 )
 
 func commandExplore(cfg *config, params []string) error {
-	if len(params) < 2 {
+	if len(params) < 1 {
 		return fmt.Errorf("you didnt specify the location area")
 	}
-	locationArea := params[1]
+	locationArea := params[0]
 	pokemon, err := cfg.pokeapiClient.ListPokemon(locationArea)
 	if err != nil {
 		return err
@@ -17,8 +17,8 @@ func commandExplore(cfg *config, params []string) error {
 	fmt.Printf("Exploring %s...\n", locationArea)
 	fmt.Println("Found Pokemon:")
 
-	for _, pokemon := range pokemon.PokemonEncounters {
-		fmt.Printf(" - %s \n", pokemon.Pokemon.Name)
+	for _, ent := range pokemon.PokemonEncounters {
+		fmt.Printf(" - %s \n", ent.Pokemon.Name)
 	}
 	return nil
 
