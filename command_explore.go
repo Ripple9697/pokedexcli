@@ -9,7 +9,7 @@ func commandExplore(cfg *config, params []string) error {
 		return fmt.Errorf("you didnt specify the location area")
 	}
 	locationArea := params[0]
-	pokemon, err := cfg.pokeapiClient.ListPokemon(locationArea)
+	pokemon, err := cfg.pokeapiClient.ListPokemons(locationArea)
 	if err != nil {
 		return err
 	}

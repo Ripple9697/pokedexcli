@@ -41,10 +41,44 @@ func (c *Client) ListLocations(pageURL *string) (RespShallowLocations, error) {
 	return requesteddt, nil
 }
 
-func (c *Client) ListPokemon(locationArea string) (RespLocationArea, error) {
+func (c *Client) ListPokemons(locationArea string) (RespLocationArea, error) {
 	obj := RespLocationArea{}
 
 	url := baseURL + "/location-area/" + locationArea
+
+	data, ok := c.cache.Get(url)
+	if !ok {
+		req, err := http.NewRequest("GET", url, nil)
+		if err != nil {
+			return obj, err
+		}
+		resp, err := c.httpClient.Do(req)
+		if err != nil {
+			return obj, err
+		}
+		defer resp.Body.Close()
+
+		data, err = io.ReadAll(resp.Body)
+		if err != nil {
+			return obj, err
+		}
+
+		c.cache.Add(url, data)
+	}
+
+	err := json.Unmarshal(data, &obj)
+	if err != nil {
+		return obj, err
+	}
+
+	return obj, nil
+}
+
+
+func (c *Client) ListPokemonDetail(pName string) (RespPokemonDetail, error) {
+	obj := RespPokemonDetail{}
+
+	url := baseURL + "/pokemon/" + pName
 
 	data, ok := c.cache.Get(url)
 	if !ok {
